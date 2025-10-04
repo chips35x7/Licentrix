@@ -33,8 +33,10 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/auth/register",
                                 "/api/auth/login",
-                                "/swagger-ui.html",
-                                "/swagger-ui/**").permitAll()
+                                "/swagger-ui/index.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
 
                                 // Licenses
                                 .requestMatchers(HttpMethod.GET, "/api/v1/licenses/**").authenticated()
