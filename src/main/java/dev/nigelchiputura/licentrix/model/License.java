@@ -42,6 +42,17 @@ public class License {
         this.annualContributionFee = annualContributionFee;
     }
 
+    public int yearsBeforeExpiry() {
+        if (issueDate == null || validityYears == null) return Integer.MAX_VALUE;
+        LocalDate expiry = issueDate.plusYears(validityYears);
+        return (int) java.time.temporal.ChronoUnit.YEARS.between(LocalDate.now(), expiry);
+    }
+
+    public void adjustFeesPercent(double percent) {
+        if (applicationFee != null) applicationFee = applicationFee * (1 + percent/100.0);
+        if (licenseFee != null)    licenseFee    = licenseFee * (1 + percent/100.0);
+    }
+
     public Integer getId() {
         return id;
     }
