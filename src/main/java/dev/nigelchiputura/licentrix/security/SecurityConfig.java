@@ -30,7 +30,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll() // explicitly allow
+                        .requestMatchers(
+                                "/api/auth/register",
+                                "/api/auth/login",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**").permitAll()
 
                                 // Licenses
                                 .requestMatchers(HttpMethod.GET, "/api/v1/licenses/**").authenticated()
@@ -46,7 +50,6 @@ public class SecurityConfig {
 //                                .requestMatchers(HttpMethod.DELETE, "/api/v1/companies/**").denyAll()
 
 
-                                // Everything else (optional, but good practice)
                         .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess
