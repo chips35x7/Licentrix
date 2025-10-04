@@ -4,6 +4,7 @@ import dev.nigelchiputura.licentrix.security.jwt.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -30,7 +31,23 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/register", "/api/auth/login").permitAll() // explicitly allow
-                        .anyRequest().authenticated()
+
+                                // Licenses
+                                .requestMatchers(HttpMethod.GET, "/api/v1/licenses/**").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/licenses/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/licenses/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/licenses/**").hasRole("ADMIN")
+
+                                // Companies
+                                .requestMatchers(HttpMethod.POST, "/api/v1/companies/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/companies/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/v1/companies/**").authenticated()
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/companies/**").authenticated()
+//                                .requestMatchers(HttpMethod.DELETE, "/api/v1/companies/**").denyAll()
+
+
+                                // Everything else (optional, but good practice)
+                        .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
