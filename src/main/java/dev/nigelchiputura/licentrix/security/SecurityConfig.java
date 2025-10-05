@@ -30,19 +30,14 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/swagger-ui/index.html",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/api/auth/register",
-                                "/api/auth/login"
-                        ).permitAll()
+                                .requestMatchers("/api/auth/register","/api/auth/login","/swagger-ui/**","/v3/api-docs/**").permitAll()
 
-                                // Licenses
-                                .requestMatchers(HttpMethod.GET, "/api/v1/licenses/**").authenticated()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/licenses/**").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.PUT, "/api/v1/licenses/**").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/licenses/**").hasRole("ADMIN")
+                                // User actions
+                                .requestMatchers(HttpMethod.POST, "/api/v1/licenses/apply").hasRole("USER")
+                                .requestMatchers(HttpMethod.GET, "/api/v1/licenses/my-applications").hasRole("USER")
+
+                                // Admin actions
+                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
 
                                 // Companies
                                 .requestMatchers(HttpMethod.POST, "/api/v1/companies/**").hasRole("ADMIN")

@@ -2,16 +2,18 @@ package dev.nigelchiputura.licentrix.controller;
 
 import dev.nigelchiputura.licentrix.model.License;
 import dev.nigelchiputura.licentrix.service.LicenseService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/licenses")
-public class LicenseController {
+@RequestMapping("api/v1/admin/licenses")
+@PreAuthorize("hasRole('ADMIN')")
+public class AdminLicenseController {
     public final LicenseService licenseService;
 
-    public LicenseController(LicenseService licenseService) {
+    public AdminLicenseController(LicenseService licenseService) {
         this.licenseService = licenseService;
     }
 
