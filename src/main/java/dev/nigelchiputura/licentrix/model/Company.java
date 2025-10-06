@@ -13,7 +13,8 @@ public class Company {
     private Integer id;
     private String name;
     private String email;
-    private String gpsCoordinates;
+    private Double latitude;
+    private Double longitude;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<License> licenses;
@@ -21,11 +22,12 @@ public class Company {
     public Company() {
     }
 
-    public Company(String name, Integer id, String email, String gpsCoordinates, List<License> licenses) {
-        this.name = name;
+    public Company(Integer id, String name, String email, Double latitude, Double longitude, List<License> licenses) {
         this.id = id;
+        this.name = name;
         this.email = email;
-        this.gpsCoordinates = gpsCoordinates;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.licenses = licenses;
     }
 
@@ -53,12 +55,20 @@ public class Company {
         this.email = email;
     }
 
-    public String getGpsCoordinates() {
-        return gpsCoordinates;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setGpsCoordinates(String gpsCoordinates) {
-        this.gpsCoordinates = gpsCoordinates;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public List<License> getLicenses() {
@@ -73,11 +83,11 @@ public class Company {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Company company = (Company) o;
-        return Objects.equals(id, company.id) && Objects.equals(name, company.name) && Objects.equals(email, company.email) && Objects.equals(gpsCoordinates, company.gpsCoordinates) && Objects.equals(licenses, company.licenses);
+        return Objects.equals(id, company.id) && Objects.equals(name, company.name) && Objects.equals(email, company.email) && Objects.equals(latitude, company.latitude) && Objects.equals(longitude, company.longitude) && Objects.equals(licenses, company.licenses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, gpsCoordinates, licenses);
+        return Objects.hash(id, name, email, latitude, longitude, licenses);
     }
 }

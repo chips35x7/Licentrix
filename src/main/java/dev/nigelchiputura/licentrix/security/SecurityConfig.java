@@ -39,6 +39,7 @@ public class SecurityConfig {
                                 // Admin actions
                                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/admin/reports/**").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/admin/companies/geojson").hasRole("ADMIN")
 
                                 // Companies
                                 .requestMatchers(HttpMethod.POST, "/api/v1/companies/**").hasRole("ADMIN")
