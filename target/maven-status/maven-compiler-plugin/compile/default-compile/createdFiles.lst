@@ -1,5 +1,6 @@
 dev\nigelchiputura\licentrix\security\jwt\JwtUtil.class
 dev\nigelchiputura\licentrix\LicentrixApplication.class
+dev\nigelchiputura\licentrix\service\EmailService.class
 dev\nigelchiputura\licentrix\controller\AuthController.class
 dev\nigelchiputura\licentrix\model\LicenseType.class
 dev\nigelchiputura\licentrix\model\UserRole.class
@@ -17,6 +18,7 @@ dev\nigelchiputura\licentrix\controller\AdminLicenseController.class
 dev\nigelchiputura\licentrix\model\Company.class
 dev\nigelchiputura\licentrix\dto\ApplicationRequest.class
 dev\nigelchiputura\licentrix\security\CustomUserDetailsService.class
+dev\nigelchiputura\licentrix\service\LicenseExpiryNotifier.class
 dev\nigelchiputura\licentrix\dto\RegisterRequest.class
 dev\nigelchiputura\licentrix\security\SecurityConfig.class
 dev\nigelchiputura\licentrix\model\License.class

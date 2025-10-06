@@ -38,6 +38,7 @@ public class SecurityConfig {
 
                                 // Admin actions
                                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/admin/reports/**").hasRole("ADMIN")
 
                                 // Companies
                                 .requestMatchers(HttpMethod.POST, "/api/v1/companies/**").hasRole("ADMIN")
