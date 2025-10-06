@@ -10,7 +10,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/licenses")
+@RequestMapping("/api/v1/applications")
 public class LicenseApplicationController {
 
     private final LicenseApplicationService service;
@@ -21,17 +21,17 @@ public class LicenseApplicationController {
         this.userRepo = userRepo;
     }
 
-    @PostMapping("/apply")
+    @PostMapping("apply")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<LicenseApplication> apply(@RequestParam Integer companyId,
-                                                    @RequestParam String licenseType,
+    public ResponseEntity<LicenseApplication> apply(@RequestBody Integer companyId,
+                                                    @RequestBody String licenseType,
                                                     Principal principal) {
         User user = userRepo.findByUsername(principal.getName()).orElseThrow();
         LicenseApplication app = service.apply(user.getId(), companyId, LicenseType.valueOf(licenseType));
         return ResponseEntity.ok(app);
     }
 
-    @GetMapping("/my-applications")
+    @GetMapping("my-applications")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<LicenseApplication>> myApplications(Principal principal) {
         User user = userRepo.findByUsername(principal.getName()).orElseThrow();

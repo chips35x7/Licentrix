@@ -33,13 +33,16 @@ public class SecurityConfig {
                                 .requestMatchers("/api/auth/register","/api/auth/login","/swagger-ui/**","/v3/api-docs/**").permitAll()
 
                                 // User actions
-                                .requestMatchers(HttpMethod.POST, "/api/v1/licenses/apply").hasRole("USER")
-                                .requestMatchers(HttpMethod.GET, "/api/v1/licenses/my-applications").hasRole("USER")
+                                .requestMatchers(HttpMethod.POST, "/api/v1/applications/**").hasRole("USER")
+//                                .requestMatchers(HttpMethod.GET, "/api/v1/applications/my-applications").hasRole("USER")
 
                                 // Admin actions
                                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/admin/reports/**").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/admin/companies/geojson").hasRole("ADMIN")
+
+                                // Licenses
+                                .requestMatchers("/api/v1/licenses/**").hasRole("ADMIN")
 
                                 // Companies
                                 .requestMatchers(HttpMethod.POST, "/api/v1/companies/**").hasRole("ADMIN")
@@ -49,7 +52,7 @@ public class SecurityConfig {
 //                                .requestMatchers(HttpMethod.DELETE, "/api/v1/companies/**").denyAll()
 
 
-                        .anyRequest().denyAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

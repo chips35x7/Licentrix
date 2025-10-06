@@ -19,8 +19,9 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public void addCompany(Company company) {
-        companyRepository.save(company);
+    public Company addCompany(Company company) {
+
+        return companyRepository.save(company);
     }
 
     public Company getCompanyById(Integer id) {
@@ -29,17 +30,18 @@ public class CompanyService {
         );
     }
 
-    public void updateCompany(Integer id, Company updatedCompany) {
+    public Company updateCompany(Integer id, Company updatedCompany) {
         Company existingCompany = companyRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException("Company with id "+ id + " not found!")
         );
 
         existingCompany.setName(updatedCompany.getName());
         existingCompany.setEmail(updatedCompany.getEmail());
-        existingCompany.setGpsCoordinates(updatedCompany.getGpsCoordinates());
+        existingCompany.setLatitude(updatedCompany.getLatitude());
+        existingCompany.setLongitude(updatedCompany.getLongitude());
         existingCompany.setLicenses(updatedCompany.getLicenses());
 
-        companyRepository.save(existingCompany);
+        return companyRepository.save(existingCompany);
     }
 
     public void deleteCompany(Integer id) {

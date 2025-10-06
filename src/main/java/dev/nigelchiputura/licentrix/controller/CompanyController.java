@@ -29,18 +29,18 @@ public class CompanyController {
     }
 
     @PostMapping
-    public void addCompany(
+    public Company addCompany(
             @RequestBody Company company
             ) {
-        companyService.addCompany(company);
+        return companyService.addCompany(company);
     }
 
     @PutMapping("{id}")
-    public void updateCompany(
+    public Company updateCompany(
             @PathVariable Integer id,
             @RequestBody Company updatedCompany
     ) {
-      companyService.updateCompany(id, updatedCompany);
+      return companyService.updateCompany(id, updatedCompany);
     }
 
     @DeleteMapping("{id}")

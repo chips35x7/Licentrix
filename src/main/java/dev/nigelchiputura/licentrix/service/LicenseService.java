@@ -25,11 +25,11 @@ public class LicenseService {
         );
     }
 
-    public void addLicense(License newLicense) {
-        licenseRepository.save(newLicense);
+    public License addLicense(License newLicense) {
+        return licenseRepository.save(newLicense);
     }
 
-    public void updateLicense(Integer id, License updatedLicense) {
+    public License updateLicense(Integer id, License updatedLicense) {
         License existingLicense = licenseRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException("License with id " + id + " not found!")
         );
@@ -43,7 +43,7 @@ public class LicenseService {
         existingLicense.setCompany(updatedLicense.getCompany());
         existingLicense.setAnnualContributionFee(updatedLicense.getAnnualContributionFee());
 
-        licenseRepository.save(existingLicense);
+        return licenseRepository.save(existingLicense);
     }
 
     public void deleteLicense(Integer id) {

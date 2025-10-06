@@ -20,8 +20,8 @@ public class License {
 
     private Double applicationFee;
     private Double licenseFee;
-    private Double annualFrequencyFee;//
-    private Double annualContributionFee; //
+    private Double annualFrequencyFee;
+    private Double annualContributionFee;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
@@ -128,13 +128,15 @@ public class License {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        License license = (License) o;
-        return Objects.equals(id, license.id) && licenseType == license.licenseType && Objects.equals(issueDate, license.issueDate) && Objects.equals(validityYears, license.validityYears) && Objects.equals(applicationFee, license.applicationFee) && Objects.equals(licenseFee, license.licenseFee) && Objects.equals(annualFrequencyFee, license.annualFrequencyFee) && Objects.equals(annualContributionFee, license.annualContributionFee) && Objects.equals(company, license.company);
+        if (this == o) return true;
+        if (!(o instanceof License license)) return false;
+        return Objects.equals(licenseType, license.licenseType)
+                && Objects.equals(validityYears, license.validityYears)
+                && Objects.equals(company.getId(), license.company.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, licenseType, issueDate, validityYears, applicationFee, licenseFee, annualFrequencyFee, annualContributionFee, company);
+        return Objects.hash(licenseType, validityYears, company.getId());
     }
 }
