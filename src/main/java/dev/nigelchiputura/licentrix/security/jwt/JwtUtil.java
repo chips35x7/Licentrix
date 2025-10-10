@@ -19,7 +19,9 @@ import java.util.stream.Collectors;
 @Component
 public class JwtUtil {
 
+
     private static final String SECRET = "2GjR+j6zTW7Wk4Y/sA9/bSXezdHPhOngHfk9EtmndD8=";
+    // YES, I KNOW THIS SHOULD BE AN ENVIRONMENT VARIABLE 😅
 
     private final Key key;
 

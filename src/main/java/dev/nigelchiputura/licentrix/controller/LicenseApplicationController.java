@@ -1,5 +1,6 @@
 package dev.nigelchiputura.licentrix.controller;
 
+import dev.nigelchiputura.licentrix.dto.ApplicationRequest;
 import dev.nigelchiputura.licentrix.model.*;
 import dev.nigelchiputura.licentrix.repository.UserRepository;
 import dev.nigelchiputura.licentrix.service.LicenseApplicationService;
@@ -23,13 +24,17 @@ public class LicenseApplicationController {
 
     @PostMapping("apply")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<LicenseApplication> apply(@RequestBody Integer companyId,
-                                                    @RequestBody String licenseType,
+    public ResponseEntity<LicenseApplication> apply(@RequestBody ApplicationRequest request,
                                                     Principal principal) {
         User user = userRepo.findByUsername(principal.getName()).orElseThrow();
-        LicenseApplication app = service.apply(user.getId(), companyId, LicenseType.valueOf(licenseType));
+        LicenseApplication app = service.apply(
+                user.getId(),
+                request.companyId(),
+                LicenseType.valueOf(request.licenseType())
+        );
         return ResponseEntity.ok(app);
     }
+
 
     @GetMapping("my-applications")
     @PreAuthorize("hasRole('USER')")

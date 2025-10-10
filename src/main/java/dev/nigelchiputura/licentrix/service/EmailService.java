@@ -14,7 +14,7 @@ public class EmailService {
 
     public void sendEmail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("your_email@gmail.com"); // match spring.mail.username
+        message.setFrom("${USER_EMAIL}");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);

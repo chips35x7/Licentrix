@@ -21,16 +21,14 @@ public class ReportService {
         this.licenseRepo = licenseRepo;
     }
 
-    // Generate CSV
+    // Generate CSV Report
     public byte[] generateLicenseCsv() throws Exception {
         List<License> licenses = licenseRepo.findAll();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         CSVWriter writer = new CSVWriter(new OutputStreamWriter(out));
 
-        // Header
         writer.writeNext(new String[]{"ID", "Company", "License Type", "Issue Date", "Validity (years)"});
 
-        // Rows
         for (License lic : licenses) {
             writer.writeNext(new String[]{
                     lic.getId().toString(),
@@ -44,7 +42,7 @@ public class ReportService {
         return out.toByteArray();
     }
 
-    // Generate PDF
+    // Generate PDF report
     public byte[] generateLicensePdf() throws Exception {
         List<License> licenses = licenseRepo.findAll();
         ByteArrayOutputStream out = new ByteArrayOutputStream();

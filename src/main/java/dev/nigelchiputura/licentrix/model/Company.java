@@ -2,6 +2,7 @@ package dev.nigelchiputura.licentrix.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +16,8 @@ public class Company {
     private String email;
     private Double latitude;
     private Double longitude;
+    private LocalDate dateOfEstablishment;
+
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<License> licenses;
@@ -22,13 +25,21 @@ public class Company {
     public Company() {
     }
 
-    public Company(Integer id, String name, String email, Double latitude, Double longitude, List<License> licenses) {
+    public Company(Integer id, String name, String email, Double latitude, Double longitude, List<License> licenses, LocalDate established) {
         this.id = id;
         this.name = name;
+        this.dateOfEstablishment = established;
         this.email = email;
-        this.latitude = latitude;
         this.longitude = longitude;
         this.licenses = licenses;
+    }
+
+    public LocalDate getDateOfEstablishment() {
+        return dateOfEstablishment;
+    }
+
+    public void setDateOfEstablishment(LocalDate dateOfEstablishment) {
+        this.dateOfEstablishment = dateOfEstablishment;
     }
 
     public Integer getId() {

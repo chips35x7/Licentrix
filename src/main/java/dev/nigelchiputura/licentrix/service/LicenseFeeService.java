@@ -27,7 +27,6 @@ public class LicenseFeeService {
     }
 
 
-    // Recalculate and update fee for a license
     public License updateFee(Integer licenseId) {
         Optional<License> opt = licenseRepo.findById(licenseId);
         if (opt.isEmpty()) throw new RuntimeException("License not found");
@@ -39,7 +38,6 @@ public class LicenseFeeService {
         return licenseRepo.save(lic);
     }
 
-    // Compare two licenses
     public boolean areEqual(Integer id1, Integer id2) {
         License l1 = licenseRepo.findById(id1).orElseThrow(() -> new RuntimeException("License not found: " + id1));
         License l2 = licenseRepo.findById(id2).orElseThrow(() -> new RuntimeException("License not found: " + id2));

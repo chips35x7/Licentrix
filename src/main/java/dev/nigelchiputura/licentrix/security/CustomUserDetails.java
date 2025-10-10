@@ -18,7 +18,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Map DB role (e.g., "USER") -> Spring authority ("ROLE_USER")
         return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
@@ -32,7 +31,6 @@ public class CustomUserDetails implements UserDetails {
         return user.getUsername();
     }
 
-    // ✅ Account status flags (customize if you add fields for locking, disabling etc.)
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -53,7 +51,6 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 
-    // Optional: Expose your full User entity if you need it in controllers
     public User getUser() {
         return this.user;
     }

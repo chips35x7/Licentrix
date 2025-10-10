@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/licenses")
+@RequestMapping("api/v1/admin/licenses")
 @PreAuthorize("hasRole('ADMIN')")
 public class LicenseController {
     public final LicenseService licenseService;
@@ -23,22 +23,22 @@ public class LicenseController {
     }
 
     @GetMapping("{id}")
-    public License getLicense(Integer id) {
+    public License getLicense(@PathVariable Integer id) {
         return licenseService.getLicenseById(id);
     }
 
     @PostMapping
-    public License addLicense(License newLicense) {
+    public License addLicense(@RequestBody License newLicense) {
         return licenseService.addLicense(newLicense);
     }
 
     @PutMapping("{id}")
-    public License updateLicense(Integer id, License updatedLicense) {
+    public License updateLicense(@PathVariable Integer id, @RequestBody License updatedLicense) {
         return licenseService.updateLicense(id, updatedLicense);
     }
 
-    @DeleteMapping
-    public void deleteLicense(Integer id) {
+    @DeleteMapping("{id}")
+    public void deleteLicense(@PathVariable Integer id) {
         licenseService.deleteLicense(id);
     }
 }

@@ -27,13 +27,11 @@ public class GeoJsonService {
                 Map<String, Object> feature = new LinkedHashMap<>();
                 feature.put("type", "Feature");
 
-                // Geometry
                 Map<String, Object> geometry = new LinkedHashMap<>();
                 geometry.put("type", "Point");
                 geometry.put("coordinates", Arrays.asList(company.getLongitude(), company.getLatitude())); // GeoJSON uses [lon, lat]
                 feature.put("geometry", geometry);
 
-                // Properties
                 Map<String, Object> props = new LinkedHashMap<>();
                 props.put("id", company.getId());
                 props.put("name", company.getName());

@@ -16,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 @Configuration
 public class SecurityConfig {
 
@@ -30,7 +33,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api/auth/register","/api/auth/login","/swagger-ui/**","/v3/api-docs/**").permitAll()
+                                .requestMatchers("/api/auth/register","/api/auth/login","/api/auth/**","/swagger-ui/**","/v3/api-docs/**").permitAll()
 
                                 // User actions
                                 .requestMatchers(HttpMethod.POST, "/api/v1/applications/**").hasRole("USER")
@@ -38,14 +41,13 @@ public class SecurityConfig {
 
                                 // Admin actions
                                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/api/v1/admin/reports/**").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/admin/companies/geojson").hasRole("ADMIN")
 
                                 // Licenses
-                                .requestMatchers("/api/v1/licenses/**").hasRole("ADMIN")
+//                                .requestMatchers("/api/v1/licenses/**").hasRole("ADMIN")
 
                                 // Companies
-                                .requestMatchers(HttpMethod.POST, "/api/v1/companies/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/v1/companies/**").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/companies/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/v1/companies/**").authenticated()
                                 .requestMatchers(HttpMethod.PUT, "/api/v1/companies/**").authenticated()
@@ -79,5 +81,19 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:5173")
+                        .allowedMethods("*")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
     }
 }

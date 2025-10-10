@@ -17,14 +17,12 @@ public class LicenseToolsController {
         this.licenseFeeService = licenseFeeService;
     }
 
-    // Compare two licenses
     @GetMapping("/compare/{id1}/{id2}")
     public ResponseEntity<?> compareLicenses(@PathVariable Integer id1, @PathVariable Integer id2) {
         boolean equal = licenseFeeService.areEqual(id1, id2);
         return ResponseEntity.ok(equal ? "Licenses are equal" : "Licenses are different");
     }
 
-    // Recalculate fee for one license
     @PutMapping("/{id}/recalculate-fee")
     public ResponseEntity<License> recalcFee(@PathVariable Integer id) {
         License updated = licenseFeeService.updateFee(id);
